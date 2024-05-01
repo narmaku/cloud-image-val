@@ -119,10 +119,15 @@ class TestsAzure:
     def test_grub_params(self, host):
         """
         Verify /etc/default/grub params
+
+        JIRA: RHEL-19583
         """
         release_version = version.parse(host.system_info.release)
 
-        if release_version >= version.parse('9.3'):
+        # RHEL-19583
+        if release_version >= version.parse('8.8'):
+            local_file = 'data/azure/grub_rhel8.8+'
+        elif release_version >= version.parse('9.3'):
             local_file = 'data/azure/grub_rhel9.3+'
         else:
             local_file = f'data/azure/grub_rhel{release_version.major}'
